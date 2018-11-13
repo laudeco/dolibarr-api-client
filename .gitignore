@@ -1,0 +1,4 @@
+playground.php
+vendor
+*.cache
+composer.lock
