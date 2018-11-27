@@ -9,8 +9,7 @@
         convertWarningsToExceptions = "true"
         processIsolation            = "false"
         stopOnFailure               = "false"
-        syntaxCheck                 = "false"
-        bootstrap                   = "tests/bootstrap.php" >
+        syntaxCheck                 = "false" >
 
     <testsuites>
         <testsuite name="Project Test Suite">
@@ -23,10 +22,5 @@
             <directory>./src/</directory>
         </whitelist>
     </filter>
-
-    <logging>
-        <log type="coverage-html" target="test-output/coverage" charset="UTF-8" yui="true" highlight="true"/>
-        <log type="coverage-clover" target="test-output/clover.xml"/>
-    </logging>
 
 </phpunit>
