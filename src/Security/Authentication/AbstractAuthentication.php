@@ -29,7 +29,7 @@ abstract class AbstractAuthentication implements Authentication
      */
     protected function addHeader($headerKey, $headerValue)
     {
-        $this->headers[] = new Header($headerKey, $headerValue);
+        $this->headers[$headerKey] = new Header($headerKey, $headerValue);
 
         return $this;
     }

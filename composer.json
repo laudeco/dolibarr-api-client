@@ -20,8 +20,13 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "Dolibarr\\Client": "src/"
+        "psr-4": {
+            "Dolibarr\\Client\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dolibarr\\Client\\Tests\\": "tests/"
         }
     }
 
