@@ -11,4 +11,4 @@ before_script:
 
 script:
 - vendor/bin/php-cs-fixer fix --dry-run --diff
-- vendor/bin/phpunit --configuration phpunit.dist.xml
+- vendor/bin/phpunit --configuration phpunit.xml.dist
