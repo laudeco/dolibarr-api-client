@@ -2,19 +2,20 @@
 
 namespace Dolibarr\Client\Service;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Dolibarr\Client\Domain\Resource\ApiResource;
 use Dolibarr\Client\Domain\Resource\ResourceId;
 use Dolibarr\Client\Exception\ApiException;
 use Dolibarr\Client\HttpClient\HttpClient;
 use Dolibarr\Client\HttpClient\HttpClientInterface;
 use GuzzleHttp\Exception\RequestException;
+use function GuzzleHttp\json_decode;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
- * @packageDolibarr\Client\AbstractService
+ * @author Laurent De Coninck <lau.deconinck@gmail.com>
  */
 abstract class AbstractService
 {
@@ -61,6 +62,25 @@ abstract class AbstractService
         try {
             return $this->httpClient
                 ->get($this->resource->getResourceName().'/'.$id)
+                ->getBody()
+                ->getContents();
+        } catch (RequestException $exception) {
+            throw new ApiException($exception->getMessage(), $exception->getCode(), $exception);
+        }
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return bool|string
+     *
+     * @throws ApiException
+     */
+    protected function getList(array $options = [])
+    {
+        try {
+            return $this->httpClient
+                ->get($this->resource->getResourceName(), $options)
                 ->getBody()
                 ->getContents();
         } catch (RequestException $exception) {
@@ -139,18 +159,18 @@ abstract class AbstractService
     /**
      * Send a DELETE request with JSON-encoded parameters.
      *
-     * @param string $uri
-     * @param array  $options
+     * @param int   $id
+     * @param array $options
      *
      * @return string
      *
      * @throws ApiException
      */
-    private function delete($uri, array $options = [])
+    protected function delete($id, array $options = [])
     {
         try {
             $response = $this->httpClient
-                ->delete($uri, $options);
+                ->delete($this->resource->getResourceName().'/'.$id, $options);
 
             return $response->getBody()
                 ->getContents();
@@ -169,6 +189,19 @@ abstract class AbstractService
     protected function deserialize($json, $type, DeserializationContext $context = null)
     {
         return $this->serializer->deserialize($json, $type, 'json', $context);
+    }
+
+    /**
+     * @param string $data
+     * @param string $type
+     *
+     * @return ArrayCollection
+     */
+    protected function deserializeCollection($data, $type)
+    {
+        $resources = $this->deserialize($data, "array<".$type.">");
+
+        return new ArrayCollection($resources);
     }
 
     /**

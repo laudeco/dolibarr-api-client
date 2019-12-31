@@ -1,7 +1,8 @@
 <?php
 
-namespace Dolibarr\Api\Client;
+namespace Dolibarr\Client;
 
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Dolibarr\Client\HttpClient\HttpClient;
 use Dolibarr\Client\HttpClient\Middleware\AuthenticationMiddleware;
 use Dolibarr\Client\Security\Authentication\Authentication;
@@ -13,7 +14,7 @@ use Webmozart\Assert\Assert;
 /**
  * @package Dolibarr\Api\Client
  */
-class ClientBuilder
+final class ClientBuilder
 {
 
     /**
@@ -36,8 +37,8 @@ class ClientBuilder
      * @param Authentication $authentication The authentication to access the api
      */
     public function __construct(
-      $baseUri,
-      Authentication $authentication
+        $baseUri,
+        Authentication $authentication
     ) {
         Assert::stringNotEmpty($baseUri, "The baseUri should not be empty");
 
@@ -73,6 +74,8 @@ class ClientBuilder
      */
     private function createSerializer()
     {
+        AnnotationRegistry::registerLoader('class_exists');
+
         return SerializerBuilder::create()
           ->addDefaultHandlers()
           ->build();
@@ -81,7 +84,7 @@ class ClientBuilder
     /**
      * @return HttpClient
      */
-    public function createHttpClient()
+    private function createHttpClient()
     {
         $httpClient = new HttpClient(
             [
@@ -97,7 +100,7 @@ class ClientBuilder
     /**
      * @return HandlerStack
      */
-    public function createHandlerStack()
+    private function createHandlerStack()
     {
         $stack = HandlerStack::create();
         $stack->push(new AuthenticationMiddleware($this->authentication));

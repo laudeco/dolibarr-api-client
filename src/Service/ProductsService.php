@@ -1,0 +1,44 @@
+<?php
+
+
+namespace Dolibarr\Client\Service;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Dolibarr\Client\Domain\Common\Barcode;
+use Dolibarr\Client\Domain\Product\Product;
+use Dolibarr\Client\Domain\Resource\ApiResource;
+use Dolibarr\Client\Exception\ApiException;
+use Dolibarr\Client\HttpClient\HttpClientInterface;
+use JMS\Serializer\SerializerInterface;
+
+/**
+ * @package Dolibarr\Client\Service
+ */
+final class ProductsService extends AbstractService
+{
+
+    /**
+     * @param HttpClientInterface $httpClient
+     * @param SerializerInterface $serializerInterface
+     */
+    public function __construct(HttpClientInterface $httpClient, SerializerInterface $serializerInterface)
+    {
+        parent::__construct($httpClient, $serializerInterface, new ApiResource('products'));
+    }
+
+    /**
+     * @param Barcode $barcode
+     *
+     * @return ArrayCollection|Product[]
+     *
+     * @throws ApiException
+     */
+    public function getByBarcode(Barcode $barcode)
+    {
+        $resources = $this->getList(['query' => [
+            'sqlfilters' => 'barcode='.$barcode->barcode()
+        ]]);
+
+        return $this->deserializeCollection($resources, Product::class);
+    }
+}
