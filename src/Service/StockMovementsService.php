@@ -5,6 +5,7 @@ namespace Dolibarr\Client\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Dolibarr\Client\Domain\Product\ProductId;
 use Dolibarr\Client\Domain\Resource\ApiResource;
+use Dolibarr\Client\Domain\Resource\ResourceId;
 use Dolibarr\Client\Domain\StockMovement\StockMovement;
 use Dolibarr\Client\Domain\StockMovement\StockMovementId;
 use Dolibarr\Client\Domain\Warehouse\WarehouseId;
@@ -36,7 +37,7 @@ final class StockMovementsService extends AbstractService
      */
     public function create(StockMovement $movement)
     {
-        $resourceId = $this->post($this->serialize($movement));
+        $resourceId = new ResourceId($this->post($this->serialize($movement)));
 
         return StockMovementId::fromResourceId($resourceId);
     }

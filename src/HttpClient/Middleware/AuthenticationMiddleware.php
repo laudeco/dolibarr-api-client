@@ -9,7 +9,7 @@ use Psr\Http\Message\RequestInterface;
 /**
  * @author Laurent De Coninck <lau.deconinck@gmail.com>
  */
-class AuthenticationMiddleware
+final class AuthenticationMiddleware
 {
     /**
      * @var Authentication

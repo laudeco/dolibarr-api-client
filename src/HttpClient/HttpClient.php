@@ -6,6 +6,7 @@ use Dolibarr\Client\Exception\ApiException;
 use Dolibarr\Client\Exception\BadRequestException;
 use Dolibarr\Client\Exception\DolibarrException;
 use Dolibarr\Client\Exception\ResourceNotFoundException;
+use Dolibarr\Client\Security\Authentication\DolibarrApiKeyRequester;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -38,6 +39,8 @@ class HttpClient implements HttpClientInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws Exception
      */
     public function get($uri, array $options = [])
     {
@@ -46,6 +49,8 @@ class HttpClient implements HttpClientInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws Exception
      */
     public function post($uri, $json, array $options = [])
     {
@@ -56,6 +61,8 @@ class HttpClient implements HttpClientInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws Exception
      */
     public function put($uri, $json, array $options = [])
     {
@@ -64,6 +71,8 @@ class HttpClient implements HttpClientInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws Exception
      */
     public function patch($uri, $json, array $options = [])
     {
@@ -72,6 +81,8 @@ class HttpClient implements HttpClientInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws Exception
      */
     public function delete($uri, array $options = [])
     {
@@ -89,6 +100,9 @@ class HttpClient implements HttpClientInterface
             $options['body'] = $json;
             $options['headers']['content-type'] = 'application/json';
         }
+
+        $authenticationOption = $this->authenticate();
+        $options = array_merge($options, $authenticationOption);
 
         try {
             return $this->client->request($method, $uri, $options);
@@ -137,5 +151,15 @@ class HttpClient implements HttpClientInterface
         }
 
         throw new ApiException($exception->getMessage());
+    }
+
+    /**
+     * Do an authenticated request.
+     *
+     * @return array
+     */
+    protected function authenticate()
+    {
+        return [];
     }
 }

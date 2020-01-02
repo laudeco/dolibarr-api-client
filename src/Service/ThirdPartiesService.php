@@ -48,6 +48,6 @@ class ThirdPartiesService extends AbstractService
      */
     public function create(Thirdparty $thirdparty)
     {
-        return parent::post($this->serialize($thirdparty));
+        return new ResourceId($this->post($this->serialize($thirdparty)));
     }
 }

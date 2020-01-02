@@ -94,7 +94,7 @@ abstract class AbstractService
      * @param array $json
      * @param array $options
      *
-     * @return ResourceId
+     * @return string
      *
      * @throws ApiException
      */
@@ -104,55 +104,9 @@ abstract class AbstractService
             $response = $this->httpClient
                 ->post($this->resource->getResourceName(), $json, $options);
 
-            return new ResourceId($response->getBody()->getContents());
+            return $response->getBody()->getContents();
         } catch (RequestException $exception) {
             throw new ApiException($exception->getMessage(), $exception->getCode(), $exception);
-        }
-    }
-
-    /**
-     * Send a PUT request with JSON-encoded parameters.
-     *
-     * @param string $uri
-     * @param string $json
-     * @param array  $options
-     *
-     * @return string
-     *
-     * @throws ApiException
-     */
-    private function put($uri, $json, array $options = [])
-    {
-        try {
-            $response = $this->httpClient
-                ->put($uri, $json, $options);
-
-            return $response;
-        } catch (RequestException $exception) {
-            throw new ApiException();
-        }
-    }
-
-    /**
-     * Send a PATCH request with JSON-encoded parameters.
-     *
-     * @param string $uri
-     * @param string $json
-     * @param array  $options
-     *
-     * @return string
-     *
-     * @throws ApiException
-     */
-    private function patch($uri, $json, array $options = [])
-    {
-        try {
-            $response = $this->httpClient
-                ->patch($uri, $json, $options);
-
-            return $response;
-        } catch (RequestException $exception) {
-            throw new ApiException();
         }
     }
 
