@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+
+  php:
+    build:
+      dockerfile: etc/dev/php56/Dockerfile
+      context: .
+    volumes:
+      - .:/app
