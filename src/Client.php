@@ -62,6 +62,14 @@ final class Client
     }
 
     /**
+     * @return WarehousesService
+     */
+    public function warehouse()
+    {
+        return new WarehousesService($this->httpClient, $this->serializer);
+    }
+
+    /**
      * @return ProductsService
      */
     public function products()

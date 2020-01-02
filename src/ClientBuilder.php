@@ -3,9 +3,12 @@
 namespace Dolibarr\Client;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Dolibarr\Client\HttpClient\AuthenticateHttpClient;
 use Dolibarr\Client\HttpClient\HttpClient;
 use Dolibarr\Client\HttpClient\Middleware\AuthenticationMiddleware;
 use Dolibarr\Client\Security\Authentication\Authentication;
+use Dolibarr\Client\Security\Authentication\DolibarrApiKeyRequester;
+use Dolibarr\Client\Service\LoginService;
 use GuzzleHttp\HandlerStack;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
@@ -86,25 +89,43 @@ final class ClientBuilder
      */
     private function createHttpClient()
     {
-        $httpClient = new HttpClient(
-            [
-                'base_uri' => $this->baseUri,
-                'handler'  => $this->createHandlerStack(),
-                'debug'    => $this->debug
-            ]
+        $httpClient = new AuthenticateHttpClient(
+            $this->clientOptions(),
+            $this->defaultKeyRequester()
         );
 
         return $httpClient;
     }
 
     /**
-     * @return HandlerStack
+     * @return DolibarrApiKeyRequester
      */
-    private function createHandlerStack()
+    private function defaultKeyRequester()
     {
-        $stack = HandlerStack::create();
-        $stack->push(new AuthenticationMiddleware($this->authentication));
+        return new DolibarrApiKeyRequester(
+            $this->loginService(),
+            $this->authentication
+        );
+    }
 
-        return $stack;
+    /**
+     * @return LoginService
+     */
+    private function loginService()
+    {
+        $client = new HttpClient($this->clientOptions());
+
+        return new LoginService($client, $this->createSerializer());
+    }
+
+    /**
+     * @return array
+     */
+    private function clientOptions()
+    {
+        return [
+            'base_uri' => $this->baseUri,
+            'debug'    => $this->debug
+        ];
     }
 }

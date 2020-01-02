@@ -36,6 +36,6 @@ class ProposalService extends AbstractService
      */
     public function create(Proposal $proposal)
     {
-        return $this->post($this->serialize($proposal));
+        return new ResourceId($this->post($this->serialize($proposal)));
     }
 }

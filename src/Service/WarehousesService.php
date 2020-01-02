@@ -79,7 +79,7 @@ final class WarehousesService extends AbstractService
      */
     public function create(Warehouse $warehouse)
     {
-        $resourceId = $this->post($this->serialize($warehouse));
+        $resourceId = new ResourceId($this->post($this->serialize($warehouse)));
 
         return WarehouseId::fromResourceId($resourceId);
     }
