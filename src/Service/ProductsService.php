@@ -6,6 +6,7 @@ namespace Dolibarr\Client\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Dolibarr\Client\Domain\Common\Barcode;
 use Dolibarr\Client\Domain\Product\Product;
+use Dolibarr\Client\Domain\Product\Type;
 use Dolibarr\Client\Domain\Resource\ApiResource;
 use Dolibarr\Client\Exception\ApiException;
 use Dolibarr\Client\HttpClient\HttpClientInterface;
@@ -38,6 +39,32 @@ final class ProductsService extends AbstractService
         $resources = $this->getList(['query' => [
             'sqlfilters' => 'barcode='.$barcode->barcode()
         ]]);
+
+        return $this->deserializeCollection($resources, Product::class);
+    }
+
+    /**
+     * @param int       $page
+     * @param int       $limit
+     * @param Type|null $mode
+     *
+     * @return ArrayCollection|Product[]
+     *
+     * @throws ApiException
+     */
+    public function getAll($page, $limit, Type $mode = null)
+    {
+        if (!$mode) {
+            $mode = Type::all();
+        }
+
+        $resources = $this->getList([
+            'query' => [
+                'limit' => $limit,
+                'page'  => $page,
+                'mode'  => $mode->getValue(),
+            ]
+        ]);
 
         return $this->deserializeCollection($resources, Product::class);
     }
