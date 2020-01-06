@@ -4,6 +4,7 @@ namespace Dolibarr\Client;
 
 use Dolibarr\Client\HttpClient\HttpClient;
 use Dolibarr\Client\HttpClient\HttpClientInterface;
+use Dolibarr\Client\Service\LoginService;
 use Dolibarr\Client\Service\ProductsService;
 use Dolibarr\Client\Service\ProposalService;
 use Dolibarr\Client\Service\StockMovementsService;
@@ -75,5 +76,13 @@ final class Client
     public function products()
     {
         return new ProductsService($this->httpClient, $this->serializer);
+    }
+
+    /**
+     * @return LoginService
+     */
+    public function login()
+    {
+        return new LoginService($this->httpClient, $this->serializer);
     }
 }
