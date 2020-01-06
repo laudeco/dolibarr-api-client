@@ -91,8 +91,8 @@ abstract class AbstractService
     /**
      * Send a POST request with JSON-encoded parameters.
      *
-     * @param array $json
-     * @param array $options
+     * @param string $json
+     * @param array  $options
      *
      * @return string
      *
