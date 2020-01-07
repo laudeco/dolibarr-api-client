@@ -54,8 +54,6 @@ class HttpClient implements HttpClientInterface
      */
     public function post($uri, $json, array $options = [])
     {
-        print $json;
-
         return $this->request('POST', $uri, $json, $options);
     }
 
