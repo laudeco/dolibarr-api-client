@@ -6,6 +6,7 @@ namespace Dolibarr\Client\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Dolibarr\Client\Domain\Common\Barcode;
 use Dolibarr\Client\Domain\Product\Product;
+use Dolibarr\Client\Domain\Product\ProductId;
 use Dolibarr\Client\Domain\Product\Type;
 use Dolibarr\Client\Domain\Resource\ApiResource;
 use Dolibarr\Client\Exception\ApiException;
@@ -41,6 +42,20 @@ final class ProductsService extends AbstractService
         ]]);
 
         return $this->deserializeCollection($resources, Product::class);
+    }
+
+    /**
+     * @param ProductId $productId
+     *
+     * @return Product
+     *
+     * @throws ApiException
+     */
+    public function getById(ProductId $productId)
+    {
+        $resource = $this->get($productId->getId());
+
+        return $this->deserialize($resource, Product::class);
     }
 
     /**
