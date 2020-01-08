@@ -2,7 +2,6 @@
 
 namespace Dolibarr\Client\Tests\Service;
 
-use Dolibarr\Client\Domain\Resource\ResourceId;
 use Dolibarr\Client\Domain\StockMovement\StockMovement;
 use Dolibarr\Client\Domain\StockMovement\StockMovementId;
 use Dolibarr\Client\Service\StockMovementsService;
