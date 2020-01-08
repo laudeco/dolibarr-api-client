@@ -39,7 +39,7 @@ final class StockMovement
      * @var string|null
      *
      * @JMS\Type("string")
-     * @JMS\SerializedName("label")
+     * @JMS\SerializedName("movementlabel")
      */
     private $label;
 
@@ -47,7 +47,7 @@ final class StockMovement
      * @var string|null
      *
      * @JMS\Type("string")
-     * @JMS\SerializedName("label")
+     * @JMS\SerializedName("movementcode")
      */
     private $inventoryCode;
 
@@ -55,9 +55,9 @@ final class StockMovement
      * @var string|null
      *
      * @JMS\Type("string")
-     * @JMS\SerializedName("type")
+     * @JMS\SerializedName("lot")
      */
-    private $type;
+    private $lot;
 
     /**
      * @return string
@@ -142,16 +142,16 @@ final class StockMovement
     /**
      * @return string|null
      */
-    public function getType()
+    public function getLot()
     {
-        return $this->type;
+        return $this->lot;
     }
 
     /**
-     * @param string|null $type
+     * @param string|null $lot
      */
-    public function setType($type)
+    public function setLot($lot)
     {
-        $this->type = $type;
+        $this->lot = $lot;
     }
 }
