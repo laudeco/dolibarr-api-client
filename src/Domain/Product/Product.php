@@ -68,6 +68,14 @@ final class Product
     private $realStock;
 
     /**
+     * @var bool
+     *
+     * @JMS\Type("boolean")
+     * @JMS\SerializedName("status_batch")
+     */
+    private $batchUsage = false;
+
+    /**
      * @return string
      */
     public function getId()
@@ -177,5 +185,21 @@ final class Product
     public function setRealStock($realStock)
     {
         $this->realStock = $realStock;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBatchUsage()
+    {
+        return $this->batchUsage;
+    }
+
+    /**
+     * @param bool $batchUsage
+     */
+    public function setBatchUsage($batchUsage)
+    {
+        $this->batchUsage = $batchUsage;
     }
 }

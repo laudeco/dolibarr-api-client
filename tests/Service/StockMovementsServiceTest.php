@@ -29,6 +29,8 @@ final class StockMovementsServiceTest extends ServiceTest
 
     /**
      * @test
+     *
+     * @throws \Exception
      */
     public function create_WithData_ValidPayload()
     {
@@ -45,6 +47,8 @@ final class StockMovementsServiceTest extends ServiceTest
         $stockMovement->setWarehouseId(2);
         $stockMovement->setLabel('My label');
         $stockMovement->setLot('9887');
+        $stockMovement->setDlc(new \DateTimeImmutable('@1596240000'));
+        $stockMovement->setDluo(new \DateTimeImmutable('@1579276796'));
 
         $id = $this->service->create($stockMovement);
 

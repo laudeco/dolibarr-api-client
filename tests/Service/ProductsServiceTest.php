@@ -24,6 +24,7 @@ final class ProductsServiceTest extends ServiceTest
         parent::setUp();
         $this->service = new ProductsService($this->mockClient(), $this->serializer());
     }
+
     /**
      * @test
      */
@@ -42,5 +43,41 @@ final class ProductsServiceTest extends ServiceTest
         $this->assertEquals('test', $product->getLabel());
         $this->assertEquals(121, $product->getId());
         $this->assertEquals('86768795768484', $product->getBarcode());
+
+        $this->assertFalse($product->isBatchUsage());
+    }
+
+    /**
+     * @test
+     */
+    public function getById_WithValidId_BatchUsage()
+    {
+        $this->mockClient()
+            ->expects($this->once())
+            ->method('get')
+            ->with('products/121')
+            ->willReturn($this->buildResponse('Products/getById-batchUsage'));
+
+        $product = $this->service->getById(new ProductId(121));
+
+        $this->assertInstanceOf(Product::class, $product);
+        $this->assertTrue($product->isBatchUsage());
+    }
+
+    /**
+     * @test
+     */
+    public function getById_WithValidId_BatchUsageFalse()
+    {
+        $this->mockClient()
+            ->expects($this->once())
+            ->method('get')
+            ->with('products/121')
+            ->willReturn($this->buildResponse('Products/getById-batchUsage-false'));
+
+        $product = $this->service->getById(new ProductId(121));
+
+        $this->assertInstanceOf(Product::class, $product);
+        $this->assertFalse($product->isBatchUsage());
     }
 }
