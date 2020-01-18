@@ -60,6 +60,23 @@ final class StockMovement
     private $lot;
 
     /**
+     * @JMS\Type("DateTimeImmutable<'Y-m-d'>")
+     * @JMS\SerializedName("dlc")
+     *
+     * @var \DateTimeImmutable|null
+     */
+    private $dlc;
+
+    /**
+     * @JMS\Type("DateTimeImmutable<'Y-m-d'>")
+     * @JMS\SerializedName("dluo")
+     *
+     * @var \DateTimeImmutable|null
+     */
+    private $dluo;
+
+
+    /**
      * @return string
      */
     public function getProductId()
@@ -153,5 +170,37 @@ final class StockMovement
     public function setLot($lot)
     {
         $this->lot = $lot;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getDlc()
+    {
+        return $this->dlc;
+    }
+
+    /**
+     * @param \DateTimeImmutable|null $dlc
+     */
+    public function setDlc(\DateTimeImmutable $dlc)
+    {
+        $this->dlc = $dlc;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getDluo()
+    {
+        return $this->dluo;
+    }
+
+    /**
+     * @param \DateTimeImmutable|null $dluo
+     */
+    public function setDluo(\DateTimeImmutable $dluo)
+    {
+        $this->dluo = $dluo;
     }
 }
