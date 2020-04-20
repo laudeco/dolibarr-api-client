@@ -36,6 +36,11 @@ final class ClientBuilder
     private $debug;
 
     /**
+     * @var array
+     */
+    private $options;
+
+    /**
      * @param string         $baseUri        The base uri of the api
      * @param Authentication $authentication The authentication to access the api
      */
@@ -47,6 +52,7 @@ final class ClientBuilder
 
         $this->baseUri = $baseUri;
         $this->authentication = $authentication;
+        $this->options = [];
     }
 
     /**
@@ -61,6 +67,8 @@ final class ClientBuilder
     }
 
     /**
+     * @deprecated please use debug
+     *
      * @param boolean $debug
      *
      * @return $this
@@ -68,6 +76,41 @@ final class ClientBuilder
     public function setDebug($debug)
     {
         $this->debug = (bool)$debug;
+
+        return $this;
+    }
+
+    /**
+     * Enables the debug mode.
+     *
+     * @return $this
+     */
+    public function debug()
+    {
+        $this->debug = true;
+
+        return $this;
+    }
+
+    /**
+     * Set the user agent.
+     *
+     * @param string $userAgent
+     *
+     * @return ClientBuilder
+     */
+    public function userAgent($userAgent)
+    {
+        Assert::stringNotEmpty($userAgent);
+
+        $this->options = array_merge(
+            $this->options,
+            [
+                'headers' => [
+                    'User-Agent' => $userAgent
+                ]
+            ]
+        );
 
         return $this;
     }
@@ -123,9 +166,12 @@ final class ClientBuilder
      */
     private function clientOptions()
     {
-        return [
-            'base_uri' => $this->baseUri,
-            'debug'    => $this->debug
-        ];
+        return array_merge(
+            [
+                'base_uri' => $this->baseUri,
+                'debug'    => $this->debug,
+            ],
+            $this->options
+        );
     }
 }
