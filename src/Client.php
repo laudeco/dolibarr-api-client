@@ -8,6 +8,7 @@ use Dolibarr\Client\Service\LoginService;
 use Dolibarr\Client\Service\ProductsService;
 use Dolibarr\Client\Service\ProposalService;
 use Dolibarr\Client\Service\StockMovementsService;
+use Dolibarr\Client\Service\ThirdPartiesCustomerCategoryService;
 use Dolibarr\Client\Service\ThirdPartiesService;
 use Dolibarr\Client\Service\WarehousesService;
 use JMS\Serializer\SerializerInterface;
@@ -76,6 +77,11 @@ final class Client
     public function products()
     {
         return new ProductsService($this->httpClient, $this->serializer);
+    }
+
+    public function thirdpartyCustomerTag()
+    {
+        return new ThirdPartiesCustomerCategoryService($this->httpClient, $this->serializer);
     }
 
     /**
