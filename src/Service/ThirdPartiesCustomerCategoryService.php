@@ -30,6 +30,7 @@ final class ThirdPartiesCustomerCategoryService extends AbstractService
      * @param ResourceId $catgeory
      *
      * @throws ApiException
+     * @throws \Exception
      */
     public function attach(ResourceId $thirdpartyId, ResourceId $catgeory)
     {
