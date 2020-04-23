@@ -4,6 +4,7 @@ namespace Dolibarr\Client;
 
 use Dolibarr\Client\HttpClient\HttpClient;
 use Dolibarr\Client\HttpClient\HttpClientInterface;
+use Dolibarr\Client\Service\ContactService;
 use Dolibarr\Client\Service\LoginService;
 use Dolibarr\Client\Service\ProductsService;
 use Dolibarr\Client\Service\ProposalService;
@@ -84,5 +85,13 @@ final class Client
     public function login()
     {
         return new LoginService($this->httpClient, $this->serializer);
+    }
+
+    /**
+     * @return ContactService
+     */
+    public function contact()
+    {
+        return new ContactService($this->httpClient, $this->serializer);
     }
 }
