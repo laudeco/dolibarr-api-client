@@ -33,7 +33,7 @@ abstract class AbstractService
     /**
      * @var ApiResource
      */
-    private $resource;
+    protected $resource;
 
     /**
      * @param HttpClientInterface $httpClient

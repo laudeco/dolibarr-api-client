@@ -40,6 +40,8 @@ class Thirdparty
     private $entity;
 
     /**
+     * Is in activity or not. (Open / Close in Dolibarr).
+     *
      * @var bool
      *
      * @JMS\SerializedName("status")
