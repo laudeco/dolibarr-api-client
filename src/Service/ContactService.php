@@ -4,6 +4,7 @@
 namespace Dolibarr\Client\Service;
 
 use Dolibarr\Client\Domain\Contact\Contact;
+use Dolibarr\Client\Domain\Contact\ContactId;
 use Dolibarr\Client\Domain\Resource\ApiResource;
 use Dolibarr\Client\Domain\Resource\ResourceId;
 use Dolibarr\Client\Exception\ApiException;
@@ -25,10 +26,12 @@ final class ContactService extends AbstractService
     /**
      * @param Contact $contact
      *
+     * @return ContactId
+     *
      * @throws ApiException
      */
     public function create(Contact $contact)
     {
-        new ResourceId($this->post($this->serialize($contact)));
+        return new ContactId((int)$this->post($this->serialize($contact)));
     }
 }
