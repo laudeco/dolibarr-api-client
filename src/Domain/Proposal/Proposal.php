@@ -3,6 +3,7 @@
 
 namespace Dolibarr\Client\Domain\Proposal;
 
+use DateTimeInterface;
 use JMS\Serializer\Annotation as JMS;
 use Webmozart\Assert\Assert;
 
@@ -34,7 +35,7 @@ class Proposal
      * @JMS\Type("DateTime<'Y-m-d'>")
      * @JMS\SerializedName("date_livraison")
      *
-     * @var int
+     * @var \DateTimeInterface
      */
     private $deliveryDate;
 
@@ -56,7 +57,7 @@ class Proposal
 
     /**
      * @JMS\Type("int")
-     * @JMS\SerializedName("cond_reglement_code")
+     * @JMS\SerializedName("cond_reglement_id")
      *
      * @var int
      */
@@ -64,14 +65,14 @@ class Proposal
 
     /**
      * @JMS\Type("int")
-     * @JMS\SerializedName("mode_reglement_code")
+     * @JMS\SerializedName("mode_reglement_id")
      *
      * @var int
      */
     private $payementMethod;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeInterface
      *
      * @JMS\Type("DateTime<'Y-m-d'>")
      * @JMS\SerializedName("date")
@@ -79,8 +80,10 @@ class Proposal
     private $date;
 
     /**
-     * @param int            $companyId
+     * @param int $companyId
      * @param \DateTime|null $date
+     *
+     * @throws \Exception
      */
     public function __construct($companyId, \DateTime $date = null)
     {
@@ -128,7 +131,7 @@ class Proposal
     }
 
     /**
-     * @return int
+     * @return \DateTimeInterface
      */
     public function getDeliveryDate()
     {
@@ -136,9 +139,9 @@ class Proposal
     }
 
     /**
-     * @param int $deliveryDate
+     * @param DateTimeInterface $deliveryDate
      */
-    public function setDeliveryDate($deliveryDate)
+    public function setDeliveryDate(\DateTimeInterface $deliveryDate)
     {
         $this->deliveryDate = $deliveryDate;
     }
@@ -206,4 +209,22 @@ class Proposal
     {
         $this->payementMethod = $payementMethod;
     }
+
+    /**
+     * @return \DateTimeInterface
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param \DateTimeInterface $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+
 }
