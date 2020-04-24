@@ -29,14 +29,6 @@ class Proposal
     private $contactId;
 
     /**
-     * @var int
-     *
-     * @JMS\Type("int")
-     * @JMS\SerializedName("statut")
-     */
-    private $status;
-
-    /**
      * Timestamp of the delivery date.
      *
      * @JMS\Type("DateTime<'Y-m-d'>")
@@ -133,22 +125,6 @@ class Proposal
     public function setContactId($contactId)
     {
         $this->contactId = $contactId;
-    }
-
-    /**
-     * @return PropalStatus
-     */
-    public function getStatus()
-    {
-        return PropalStatus::fromInteger($this->status);
-    }
-
-    /**
-     * @param PropalStatus $status
-     */
-    public function setStatus(PropalStatus $status)
-    {
-        $this->status = $status->getValue();
     }
 
     /**
