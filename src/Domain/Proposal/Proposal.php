@@ -80,6 +80,14 @@ class Proposal
     private $date;
 
     /**
+     * @var string
+     *
+     * @JMS\Type("string")
+     * @JMS\SerializedName("note_public")
+     */
+    private $note;
+
+    /**
      * @param int            $companyId
      * @param \DateTime|null $date
      *
@@ -224,5 +232,21 @@ class Proposal
     public function setDate($date)
     {
         $this->date = $date;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param string $note
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
     }
 }
