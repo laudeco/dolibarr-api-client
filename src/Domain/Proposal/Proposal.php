@@ -3,7 +3,9 @@
 
 namespace Dolibarr\Client\Domain\Proposal;
 
+use DateTimeInterface;
 use JMS\Serializer\Annotation as JMS;
+use Webmozart\Assert\Assert;
 
 /**
  * @author Laurent De Coninck <lau.deconinck@gmail.com>
@@ -23,61 +25,77 @@ class Proposal
      * @var int
      *
      * @JMS\Type("int")
+     * @JMS\SerializedName("contactid")
+     */
+    private $contactId;
+
+    /**
+     * Timestamp of the delivery date.
+     *
+     * @JMS\Type("DateTime<'Y-m-d'>")
+     * @JMS\SerializedName("date_livraison")
+     *
+     * @var \DateTimeInterface
+     */
+    private $deliveryDate;
+
+    /**
+     * @JMS\Type("int")
+     * @JMS\SerializedName("user_author_id")
+     *
+     * @var
+     */
+    private $authorId;
+
+    /**
+     * @var int
+     *
+     * @JMS\Type("int")
      * @JMS\SerializedName("demand_reason_id")
      */
     private $origin;
 
     /**
-     * @var \DateTime
+     * @JMS\Type("int")
+     * @JMS\SerializedName("cond_reglement_id")
      *
-     * @JMS\Type("DateTime")
-     */
-    private $date;
-
-    /**
-     * @var
+     * @var int
      */
     private $salesCondition;
 
     /**
+     * @JMS\Type("int")
+     * @JMS\SerializedName("mode_reglement_id")
+     *
      * @var int
      */
     private $payementMethod;
 
     /**
-     * @param int $companyId
+     * @var \DateTimeInterface
      *
-     * @return Proposal
+     * @JMS\Type("DateTime<'Y-m-d'>")
+     * @JMS\SerializedName("date")
      */
-    public function setCompanyId($companyId)
-    {
-        $this->companyId = $companyId;
-
-        return $this;
-    }
+    private $date;
 
     /**
-     * @param int $origin
+     * @param int            $companyId
+     * @param \DateTime|null $date
      *
-     * @return Proposal
+     * @throws \Exception
      */
-    public function setOrigin($origin)
+    public function __construct($companyId, \DateTime $date = null)
     {
-        $this->origin = $origin;
+        Assert::integer($companyId);
+        Assert::greaterThan($companyId, 0);
 
-        return $this;
-    }
+        if ($date === null) {
+            $date = new \DateTime();
+        }
 
-    /**
-     * @param \DateTime $date
-     *
-     * @return Proposal
-     */
-    public function setDate($date)
-    {
         $this->date = $date;
-
-        return $this;
+        $this->companyId = $companyId;
     }
 
     /**
@@ -89,6 +107,62 @@ class Proposal
     }
 
     /**
+     * @param int $companyId
+     */
+    public function setCompanyId($companyId)
+    {
+        $this->companyId = $companyId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getContactId()
+    {
+        return $this->contactId;
+    }
+
+    /**
+     * @param int $contactId
+     */
+    public function setContactId($contactId)
+    {
+        $this->contactId = $contactId;
+    }
+
+    /**
+     * @return \DateTimeInterface
+     */
+    public function getDeliveryDate()
+    {
+        return $this->deliveryDate;
+    }
+
+    /**
+     * @param DateTimeInterface $deliveryDate
+     */
+    public function setDeliveryDate(\DateTimeInterface $deliveryDate)
+    {
+        $this->deliveryDate = $deliveryDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthorId()
+    {
+        return $this->authorId;
+    }
+
+    /**
+     * @param mixed $authorId
+     */
+    public function setAuthorId($authorId)
+    {
+        $this->authorId = $authorId;
+    }
+
+    /**
      * @return int
      */
     public function getOrigin()
@@ -97,10 +171,58 @@ class Proposal
     }
 
     /**
-     * @return \DateTime
+     * @param int $origin
+     */
+    public function setOrigin($origin)
+    {
+        $this->origin = $origin;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSalesCondition()
+    {
+        return $this->salesCondition;
+    }
+
+    /**
+     * @param int $salesCondition
+     */
+    public function setSalesCondition($salesCondition)
+    {
+        $this->salesCondition = $salesCondition;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPayementMethod()
+    {
+        return $this->payementMethod;
+    }
+
+    /**
+     * @param int $payementMethod
+     */
+    public function setPayementMethod($payementMethod)
+    {
+        $this->payementMethod = $payementMethod;
+    }
+
+    /**
+     * @return \DateTimeInterface
      */
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * @param \DateTimeInterface $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 }

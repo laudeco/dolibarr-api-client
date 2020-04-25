@@ -4,6 +4,7 @@
 namespace Dolibarr\Client\Service;
 
 use Dolibarr\Client\Domain\Proposal\Proposal;
+use Dolibarr\Client\Domain\Proposal\ProposalProduct;
 use Dolibarr\Client\Domain\Resource\ApiResource;
 use Dolibarr\Client\Domain\Resource\ResourceId;
 use Dolibarr\Client\Exception\ApiException;
@@ -37,5 +38,10 @@ class ProposalService extends AbstractService
     public function create(Proposal $proposal)
     {
         return new ResourceId($this->post($this->serialize($proposal)));
+    }
+
+    public function addProduct(ResourceId $proposalId, ProposalProduct $product)
+    {
+        return new ResourceId($this->post($this->serialize($product), [], $proposalId->getId().'/lines'));
     }
 }

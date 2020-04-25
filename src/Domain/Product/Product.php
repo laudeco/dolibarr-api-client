@@ -76,6 +76,30 @@ final class Product
     private $batchUsage = false;
 
     /**
+     * @var float
+     *
+     * @JMS\Type("float")
+     * @JMS\SerializedName("price")
+     */
+    private $priceHt;
+
+    /**
+     * @var float
+     *
+     * @JMS\Type("float")
+     * @JMS\SerializedName("price_ttc")
+     */
+    private $priceTtc;
+
+    /**
+     * @var float
+     *
+     * @JMS\Type("float")
+     * @JMS\SerializedName("tva_tx")
+     */
+    private $rateVat;
+
+    /**
      * @return string
      */
     public function getId()
@@ -201,5 +225,29 @@ final class Product
     public function setBatchUsage($batchUsage)
     {
         $this->batchUsage = $batchUsage;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPriceHt()
+    {
+        return $this->priceHt;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPriceTtc()
+    {
+        return $this->priceTtc;
+    }
+
+    /**
+     * @return float
+     */
+    public function getRateVat()
+    {
+        return $this->rateVat;
     }
 }
