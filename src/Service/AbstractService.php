@@ -93,16 +93,17 @@ abstract class AbstractService
      *
      * @param string $json
      * @param array  $options
+     * @param string $slug
      *
      * @return string
      *
      * @throws ApiException
      */
-    protected function post($json, array $options = [])
+    protected function post($json, array $options = [], $slug = '')
     {
         try {
             $response = $this->httpClient
-                ->post($this->resource->getResourceName(), $json, $options);
+                ->post($this->resource->getResourceName().(!empty($slug) ? '/'.$slug : ''), $json, $options);
 
             return $response->getBody()->getContents();
         } catch (RequestException $exception) {

@@ -80,7 +80,7 @@ class Proposal
     private $date;
 
     /**
-     * @param int $companyId
+     * @param int            $companyId
      * @param \DateTime|null $date
      *
      * @throws \Exception
@@ -225,6 +225,4 @@ class Proposal
     {
         $this->date = $date;
     }
-
-
 }
